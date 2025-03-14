@@ -4,7 +4,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.henriquemonteiro.OrdemDeServicos.model.Contato;
 
-public interface ContatoRepository extends JpaRepository <Contato, Long>{
+import java.util.UUID;
+
+public interface ContatoRepository extends JpaRepository <Contato, UUID>{
 
 	
 }

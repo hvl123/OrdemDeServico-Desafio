@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.henriquemonteiro.OrdemDeServicos.model.Endereco;
 
-public interface EnderecoRepository extends JpaRepository<Endereco, Long>{
+import java.util.UUID;
+
+public interface EnderecoRepository extends JpaRepository<Endereco, UUID>{
 
 }

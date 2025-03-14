@@ -2,6 +2,7 @@ package br.com.henriquemonteiro.OrdemDeServicos.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,20 +21,26 @@ public class ContatoController {
 	private ContatoRepository contatoRepository;
 	
 	@GetMapping//método utilizado para listar os contatos
-	public List<Contato> listarContatos(){
-		
+	public List<Contato> listarContatos() {
 		return contatoRepository.findAll();
 	}
-	
-	
+
+
+
 	@PostMapping//método para cadastrar novo contato
-	public ResponseEntity<Contato> cadastrarContato(@RequestBody Contato contato){
-		Contato novoContato = contatoRepository.save(contato);
-		return new ResponseEntity<>(novoContato, HttpStatus.CREATED);
+	public ResponseEntity<Contato> cadastrarContato(@RequestBody Contato contato) {
+		// Associa os endereços ao contato
+		if (contato.getEnderecos() != null) {
+			contato.getEnderecos().forEach(endereco -> endereco.setContato(contato));
 		}
 
+		Contato novoContato = contatoRepository.save(contato);
+		return new ResponseEntity<>(novoContato, HttpStatus.CREATED);
+	}
+
+
 	@PutMapping("/{id}")//método para atualizar o contato já existente
-	public ResponseEntity<Contato> alterarContato(@PathVariable Long id, @RequestBody Contato contato) {
+	public ResponseEntity<Contato> alterarContato(@PathVariable UUID id, @RequestBody Contato contato) {
 		if (!contatoRepository.existsById(id)) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -43,7 +50,7 @@ public class ContatoController {
 	}
 
 	@DeleteMapping("/{id}")//Método para excluir um contato existente
-	public ResponseEntity<Void> excluirContato(@PathVariable Long id) {
+	public ResponseEntity<Void> excluirContato(@PathVariable UUID id) {
 		if (!contatoRepository.existsById(id)) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
