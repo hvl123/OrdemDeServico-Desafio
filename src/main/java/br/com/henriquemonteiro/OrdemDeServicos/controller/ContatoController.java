@@ -4,13 +4,21 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import br.com.henriquemonteiro.OrdemDeServicos.dto.EnderecoUpdateDTO;
+import br.com.henriquemonteiro.OrdemDeServicos.model.Endereco;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import br.com.henriquemonteiro.OrdemDeServicos.model.Contato;
 import br.com.henriquemonteiro.OrdemDeServicos.repository.ContatoRepository;
+import br.com.henriquemonteiro.OrdemDeServicos.dto.ContatoUptadeDTO;
+import br.com.henriquemonteiro.OrdemDeServicos.dto.ContatoUptadeDTO;
 @RestController
 @RequestMapping("/contatos")
 
@@ -58,13 +66,74 @@ public class ContatoController {
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
+
+
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<String> handleException(Exception e) {
 		return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	@PatchMapping("/{id}")
+	@Transactional
+	@Operation(
+			summary = "Atualiza parcialmente um contato",
+			description = "Atualiza apenas os campos fornecidos. Campos não fornecidos permanecem inalterados."
+	)
+	@ApiResponses({
+			@ApiResponse(responseCode = "200", description = "Contato atualizado com sucesso"),
+			@ApiResponse(responseCode = "404", description = "Contato não encontrado")
+	})
+	public ResponseEntity<Contato> atualizarParcialmenteContato(@PathVariable UUID id, @RequestBody  ContatoUptadeDTO updateDTO) {
+		// Busca o contato pelo ID
+		Optional<Contato> contatoOptional = contatoRepository.findById(id);
+		if (contatoOptional.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 
+		Contato contato = contatoOptional.get();
 
+		// Atualiza os campos do Contato
+		if (updateDTO.getNome() != null) {
+			contato.setNome(updateDTO.getNome());
+		}
+		if (updateDTO.getEmail() != null) {
+			contato.setEmail(updateDTO.getEmail());
+		}
+		if (updateDTO.getTelefone() != null) {
+			contato.setTelefone(updateDTO.getTelefone());
+		}
+		if (updateDTO.getDataNascimento() != null) {
+			contato.setDataNascimento(updateDTO.getDataNascimento());
+		}
 
+		// Atualiza os endereços, se fornecidos
+		if (updateDTO.getEnderecos() != null) {
+			for (EnderecoUpdateDTO enderecoUpdateDTO : updateDTO.getEnderecos()) {
+				// Busca o endereço na lista de endereços do Contato
+				Optional<Endereco> enderecoOptional = contato.getEnderecos().stream()
+						.filter(e -> e.getId().equals(enderecoUpdateDTO.getId()))
+						.findFirst();
+
+				if (enderecoOptional.isPresent()) {
+					Endereco endereco = enderecoOptional.get();
+
+					// Atualiza os campos do endereço
+					if (enderecoUpdateDTO.getRua() != null) {
+						endereco.setRua(enderecoUpdateDTO.getRua());
+					}
+					if (enderecoUpdateDTO.getNumero() != null) {
+						endereco.setNumero(enderecoUpdateDTO.getNumero());
+					}
+					if (enderecoUpdateDTO.getCep() != null) {
+						endereco.setCep(enderecoUpdateDTO.getCep());
+					}
+				}
+			}
+		}
+
+		// Salva as alterações
+		Contato contatoAtualizado = contatoRepository.save(contato);
+		return new ResponseEntity<>(contatoAtualizado, HttpStatus.OK);
+	}
 
 	
 
