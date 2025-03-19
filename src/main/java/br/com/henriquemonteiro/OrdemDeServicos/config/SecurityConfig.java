@@ -28,15 +28,15 @@ public class SecurityConfig{
                                 "/v3/api-docs/**",
                                 "/swagger-ui.html",
                                 "/api/token",
-                                "/**" // Permite todas as requisições para o site Render sem autenticação
-                        ).permitAll() // Permite o acesso sem autenticação para Swagger e o site
+                                "/**",  // Liberar todas as requisições sem autenticação
+                                "https://ordemdeservico-desafio-5.onrender.com/**"  // Garantir que a URL completa do Render seja permitida
+                        ).permitAll()  // Permite o acesso sem autenticação para todas as URLs relevantes
                         .requestMatchers("/api/contatos/**").hasAuthority("SCOPE_read:contatos")
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(AbstractHttpConfigurer::disable);
-
         return http.build();
     }
 
