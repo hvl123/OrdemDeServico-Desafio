@@ -1,5 +1,4 @@
 package br.com.henriquemonteiro.OrdemDeServicos.config;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +14,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig{
 
     @Value("${auth0.issuer}")
     private String issuer;
@@ -29,8 +28,8 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/swagger-ui.html",
                                 "/api/token",
-                                "https://ordemdeservico-desafio-5.onrender.com/**" // Permite a URL gerada pelo Render
-                        ).permitAll() // Permite acesso ao Swagger e ao site do Render sem autenticação
+                                "/**" // Permite todas as requisições para o site Render sem autenticação
+                        ).permitAll() // Permite o acesso sem autenticação para Swagger e o site
                         .requestMatchers("/api/contatos/**").hasAuthority("SCOPE_read:contatos")
                         .anyRequest().authenticated()
                 )
