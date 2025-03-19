@@ -28,8 +28,9 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
                                 "/swagger-ui.html",
-                                "/api/token"
-                        ).permitAll() // Permite acesso ao Swagger sem autenticação
+                                "/api/token",
+                                "https://ordemdeservico-desafio-5.onrender.com/**" // Permite a URL gerada pelo Render
+                        ).permitAll() // Permite acesso ao Swagger e ao site do Render sem autenticação
                         .requestMatchers("/api/contatos/**").hasAuthority("SCOPE_read:contatos")
                         .anyRequest().authenticated()
                 )
