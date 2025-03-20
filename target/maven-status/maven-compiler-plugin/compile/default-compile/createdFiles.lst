@@ -1,0 +1,13 @@
+br\com\henriquemonteiro\OrdemDeServicos\config\corsConfig.class
+br\com\henriquemonteiro\OrdemDeServicos\model\Endereco.class
+br\com\henriquemonteiro\OrdemDeServicos\config\SwaggerConfig.class
+br\com\henriquemonteiro\OrdemDeServicos\repository\EnderecoRepository.class
+br\com\henriquemonteiro\OrdemDeServicos\repository\ContatoRepository.class
+br\com\henriquemonteiro\OrdemDeServicos\config\SecurityConfig.class
+br\com\henriquemonteiro\OrdemDeServicos\dto\EnderecoUpdateDTO.class
+br\com\henriquemonteiro\OrdemDeServicos\dto\ContatoUptadeDTO.class
+br\com\henriquemonteiro\OrdemDeServicos\OrdemDeServicosApplication.class
+br\com\henriquemonteiro\OrdemDeServicos\controller\AuthController.class
+br\com\henriquemonteiro\OrdemDeServicos\config\corsConfig$1.class
+br\com\henriquemonteiro\OrdemDeServicos\model\Contato.class
+br\com\henriquemonteiro\OrdemDeServicos\controller\ContatoController.class

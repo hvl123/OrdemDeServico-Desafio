@@ -1,0 +1,12 @@
+C:\Users\Henrique\Documents\OrdemDeServico\workSpaces\ordemServico\OrdemDeServico-Desafio-main\src\main\java\br\com\henriquemonteiro\OrdemDeServicos\config\corsConfig.java
+C:\Users\Henrique\Documents\OrdemDeServico\workSpaces\ordemServico\OrdemDeServico-Desafio-main\src\main\java\br\com\henriquemonteiro\OrdemDeServicos\config\SecurityConfig.java
+C:\Users\Henrique\Documents\OrdemDeServico\workSpaces\ordemServico\OrdemDeServico-Desafio-main\src\main\java\br\com\henriquemonteiro\OrdemDeServicos\config\SwaggerConfig.java
+C:\Users\Henrique\Documents\OrdemDeServico\workSpaces\ordemServico\OrdemDeServico-Desafio-main\src\main\java\br\com\henriquemonteiro\OrdemDeServicos\controller\AuthController.java
+C:\Users\Henrique\Documents\OrdemDeServico\workSpaces\ordemServico\OrdemDeServico-Desafio-main\src\main\java\br\com\henriquemonteiro\OrdemDeServicos\controller\ContatoController.java
+C:\Users\Henrique\Documents\OrdemDeServico\workSpaces\ordemServico\OrdemDeServico-Desafio-main\src\main\java\br\com\henriquemonteiro\OrdemDeServicos\dto\ContatoUptadeDTO.java
+C:\Users\Henrique\Documents\OrdemDeServico\workSpaces\ordemServico\OrdemDeServico-Desafio-main\src\main\java\br\com\henriquemonteiro\OrdemDeServicos\dto\EnderecoUpdateDTO.java
+C:\Users\Henrique\Documents\OrdemDeServico\workSpaces\ordemServico\OrdemDeServico-Desafio-main\src\main\java\br\com\henriquemonteiro\OrdemDeServicos\model\Contato.java
+C:\Users\Henrique\Documents\OrdemDeServico\workSpaces\ordemServico\OrdemDeServico-Desafio-main\src\main\java\br\com\henriquemonteiro\OrdemDeServicos\model\Endereco.java
+C:\Users\Henrique\Documents\OrdemDeServico\workSpaces\ordemServico\OrdemDeServico-Desafio-main\src\main\java\br\com\henriquemonteiro\OrdemDeServicos\OrdemDeServicosApplication.java
+C:\Users\Henrique\Documents\OrdemDeServico\workSpaces\ordemServico\OrdemDeServico-Desafio-main\src\main\java\br\com\henriquemonteiro\OrdemDeServicos\repository\ContatoRepository.java
+C:\Users\Henrique\Documents\OrdemDeServico\workSpaces\ordemServico\OrdemDeServico-Desafio-main\src\main\java\br\com\henriquemonteiro\OrdemDeServicos\repository\EnderecoRepository.java
