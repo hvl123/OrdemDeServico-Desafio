@@ -11,18 +11,33 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 @EnableWebSecurity
 public class SecurityConfig {
 
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().permitAll() // Permite todas as requisições sem autenticação
                 )
-                // .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))) // Comentado para desativar JWT
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .csrf(AbstractHttpConfigurer::disable);
+                .csrf(AbstractHttpConfigurer::disable)
+                .httpBasic(AbstractHttpConfigurer::disable) // Desativa autenticação básica (Basic Auth)
+                .formLogin(AbstractHttpConfigurer::disable); // Desativa formulário de login
 
         return http.build();
     }
+}
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        http
+//                .authorizeHttpRequests(auth -> auth
+//                        .anyRequest().permitAll() // Permite todas as requisições sem autenticação
+//                )
+//                // .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))) // Comentado para desativar JWT
+//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .csrf(AbstractHttpConfigurer::disable);
+//
+//        return http.build();
+//    }
 
     // @Bean
     // public JwtDecoder jwtDecoder() {
@@ -40,4 +55,4 @@ public class SecurityConfig {
 
     //     return jwtAuthenticationConverter;
     // }
-}
+
