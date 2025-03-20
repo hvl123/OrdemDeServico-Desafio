@@ -18,10 +18,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().permitAll() // Permite todas as requisições sem autenticação
                 )
+                // Desativa o uso do JWT removendo essa configuração.
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .csrf(AbstractHttpConfigurer::disable)
-                .httpBasic(AbstractHttpConfigurer::disable) // Desativa autenticação básica (Basic Auth)
-                .formLogin(AbstractHttpConfigurer::disable); // Desativa formulário de login
+                .csrf(AbstractHttpConfigurer::disable); // Desativa o CSRF para permitir todas as requisições
 
         return http.build();
     }
