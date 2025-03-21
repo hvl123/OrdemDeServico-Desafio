@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,12 +29,15 @@ public class ContatoController {
 	@Autowired
 	private ContatoRepository contatoRepository;
 
+	// Endpoint público (sem validação de scopes)
 	@GetMapping
 	public List<Contato> listarContatos() {
 		return contatoRepository.findAll();
 	}
 
+	// Endpoint protegido: exige o scope "create:contatos"
 	@PostMapping
+	@PreAuthorize("hasAuthority('SCOPE_create:contatos')")
 	public ResponseEntity<Contato> cadastrarContato(@Valid @RequestBody Contato contato) {
 		if (contato.getEnderecos() != null) {
 			contato.getEnderecos().forEach(endereco -> endereco.setContato(contato));
@@ -42,7 +46,9 @@ public class ContatoController {
 		return new ResponseEntity<>(novoContato, HttpStatus.CREATED);
 	}
 
+	// Endpoint protegido: exige o scope "update:contatos"
 	@PutMapping("/{id}")
+	@PreAuthorize("hasAuthority('SCOPE_update:contatos')")
 	public ResponseEntity<Contato> alterarContato(@PathVariable UUID id, @RequestBody Contato contato) {
 		if (!contatoRepository.existsById(id)) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -52,7 +58,9 @@ public class ContatoController {
 		return new ResponseEntity<>(atualizado, HttpStatus.OK);
 	}
 
+	// Endpoint protegido: exige o scope "delete:contatos"
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasAuthority('SCOPE_delete:contatos')")
 	public ResponseEntity<Void> excluirContato(@PathVariable UUID id) {
 		if (!contatoRepository.existsById(id)) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -61,9 +69,10 @@ public class ContatoController {
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
+	// Endpoint protegido: exige o scope "update:contatos"
 	@PatchMapping("/{id}")
 	@Transactional
-
+	@PreAuthorize("hasAuthority('SCOPE_update:contatos')")
 	@Operation(
 			summary = "Atualiza parcialmente um contato",
 			description = "Atualiza apenas os campos fornecidos. Campos não fornecidos permanecem inalterados."

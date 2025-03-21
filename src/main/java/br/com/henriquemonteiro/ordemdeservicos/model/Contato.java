@@ -34,7 +34,7 @@ public class Contato {
 	    private String telefone;
 
 		@NotNull(message = "A data de nascimento é obrigatória")
-		@Past(message =  "Favor inserir uma data de nascimento válida")
+//		@Past(message =  "Favor inserir uma data de nascimento válida")
 	    private LocalDate dataNascimento;
 
 	@OneToMany(mappedBy = "contato", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)

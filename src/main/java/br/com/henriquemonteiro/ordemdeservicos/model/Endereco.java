@@ -27,7 +27,6 @@ public class Endereco {
 	private String rua;
 
 	@NotBlank(message = "O campo nome é obrigatório")
-	@Size(min = 3, max = 50, message = "O nome deve contar no mínimo 3 caracteres")
 	private String numero;
 
 	@NotBlank(message = "O CEP é obrigatório")
