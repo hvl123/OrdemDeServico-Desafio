@@ -1,1 +1,5 @@
-br\com\henriquemonteiro\OrdemDeServicos\OrdemDeServicosApplicationTests.class
+br\com\henriquemonteiro\ordemdeservicos\test\controllerTest\ContatoControllerTest.class
+br\com\henriquemonteiro\ordemdeservicos\test\modelTest\EnderecoTest.class
+br\com\henriquemonteiro\ordemdeservicos\test\modelTest\ContatoTest.class
+br\com\henriquemonteiro\ordemdeservicos\test\OrdemDeServicosApplicationTests.class
+br\com\henriquemonteiro\ordemdeservicos\test\securityConfigTest\SecurityConfigTest.class

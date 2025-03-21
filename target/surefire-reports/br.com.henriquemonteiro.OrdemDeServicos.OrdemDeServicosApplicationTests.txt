@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: br.com.henriquemonteiro.OrdemDeServicos.OrdemDeServicosApplicationTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.691 s - in br.com.henriquemonteiro.OrdemDeServicos.OrdemDeServicosApplicationTests

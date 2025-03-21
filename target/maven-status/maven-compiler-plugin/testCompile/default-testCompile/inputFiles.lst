@@ -1,4 +1,5 @@
-C:\Users\Henrique\Documents\OrdemDeServico\workSpaces\ordemServico\OrdemDeServico-Desafio-main\src\test\java\br\com\henriquemonteiro\OrdemDeServicos\controllerTeste\AuthControllerTest.java
-C:\Users\Henrique\Documents\OrdemDeServico\workSpaces\ordemServico\OrdemDeServico-Desafio-main\src\test\java\br\com\henriquemonteiro\OrdemDeServicos\controllerTeste\ContatoControllerTest.java
-C:\Users\Henrique\Documents\OrdemDeServico\workSpaces\ordemServico\OrdemDeServico-Desafio-main\src\test\java\br\com\henriquemonteiro\OrdemDeServicos\OrdemDeServicosApplicationTests.java
-C:\Users\Henrique\Documents\OrdemDeServico\workSpaces\ordemServico\OrdemDeServico-Desafio-main\src\test\java\br\com\henriquemonteiro\OrdemDeServicos\securityConfigTest\SecurityConfigTest.java
+C:\Users\Henrique\Documents\OrdemDeServico\workSpaces\ordemServico\OrdemDeServico-Desafio-main\src\test\java\br\com\henriquemonteiro\ordemdeservicos\test\controllerTest\ContatoControllerTest.java
+C:\Users\Henrique\Documents\OrdemDeServico\workSpaces\ordemServico\OrdemDeServico-Desafio-main\src\test\java\br\com\henriquemonteiro\ordemdeservicos\test\modelTest\ContatoTest.java
+C:\Users\Henrique\Documents\OrdemDeServico\workSpaces\ordemServico\OrdemDeServico-Desafio-main\src\test\java\br\com\henriquemonteiro\ordemdeservicos\test\modelTest\EnderecoTest.java
+C:\Users\Henrique\Documents\OrdemDeServico\workSpaces\ordemServico\OrdemDeServico-Desafio-main\src\test\java\br\com\henriquemonteiro\ordemdeservicos\test\OrdemDeServicosApplicationTests.java
+C:\Users\Henrique\Documents\OrdemDeServico\workSpaces\ordemServico\OrdemDeServico-Desafio-main\src\test\java\br\com\henriquemonteiro\ordemdeservicos\test\securityConfigTest\SecurityConfigTest.java
