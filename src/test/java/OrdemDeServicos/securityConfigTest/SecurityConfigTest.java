@@ -1,4 +1,4 @@
-package br.com.henriquemonteiro.OrdemDeServicos.securityConfigTest;
+package OrdemDeServicos.securityConfigTest;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

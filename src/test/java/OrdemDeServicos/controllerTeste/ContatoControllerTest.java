@@ -1,4 +1,4 @@
-package br.com.henriquemonteiro.OrdemDeServicos.controllerTeste;
+package OrdemDeServicos.controllerTeste;
 
 
 import br.com.henriquemonteiro.OrdemDeServicos.controller.ContatoController;
