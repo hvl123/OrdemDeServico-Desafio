@@ -18,16 +18,36 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Value("${auth0.issuer}")
-    private String issuer;  // Injetando a URL do issuer a partir do arquivo de configuração
+    private String issuer;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll() // Permite todas as requisições sem autenticação
+                        // Libera acesso irrestrito ao Swagger
+                        .requestMatchers(
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/api/token"
+                        ).permitAll()
+
+                        // Libera acesso irrestrito à URL específica
+                        .requestMatchers("https://ordemdeservico-desafio-6.onrender.com/**").permitAll()
+
+                        // Protege o endpoint de contatos: apenas autenticados e com SCOPE_read:contatos podem acessar
+                        .requestMatchers("/api/contatos").hasAuthority("SCOPE_read:contatos")
+
+                        // Exige autenticação para todas as outras requisições
+                        .anyRequest().authenticated()
                 )
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))) // Habilita JWT
+                // Habilita autenticação via JWT
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())))
+
+                // Configura a sessão como STATELESS (sem estado)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
+                // Desativa CSRF para APIs REST
                 .csrf(AbstractHttpConfigurer::disable);
 
         return http.build();
@@ -35,7 +55,6 @@ public class SecurityConfig {
 
     @Bean
     public JwtDecoder jwtDecoder() {
-        // Usando o issuer para configurar o NimbusJwtDecoder
         return NimbusJwtDecoder.withJwkSetUri(issuer + ".well-known/jwks.json").build();
     }
 
