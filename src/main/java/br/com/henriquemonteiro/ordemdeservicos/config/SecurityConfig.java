@@ -34,8 +34,6 @@ public class SecurityConfig {
                                 "/swagger-resources/**" // Adicione esta linha
                         ).permitAll()
 
-                        // Libera acesso irrestrito à URL específica
-                        .requestMatchers("https://ordemdeservico-desafio-6.onrender.com/**").permitAll()
 
                         // Protege o endpoint de contatos: apenas autenticados e com SCOPE_read:contatos podem acessar
                         .requestMatchers("/api/contatos").hasAuthority("SCOPE_read:contatos")

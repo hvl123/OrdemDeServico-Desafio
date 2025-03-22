@@ -10,5 +10,4 @@ br\com\henriquemonteiro\ordemdeservicos\repository\ContatoRepository.class
 br\com\henriquemonteiro\ordemdeservicos\controller\AuthController.class
 br\com\henriquemonteiro\ordemdeservicos\config\CorsConfig$1.class
 br\com\henriquemonteiro\ordemdeservicos\config\SecurityConfig.class
-br\com\henriquemonteiro\ordemdeservicos\exceptions\GlobalExceptionHandler.class
 br\com\henriquemonteiro\ordemdeservicos\controller\ContatoController.class
