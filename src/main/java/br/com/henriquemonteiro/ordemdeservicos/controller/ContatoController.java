@@ -38,7 +38,8 @@ public class ContatoController {
 
 	// Endpoint protegido: exige o scope "create:contatos"
 
-	@PostMapping("Cadastrar Novo Contato")
+	@PostMapping()
+	@Operation(summary = "Cadastrar novo contato")
 	@PreAuthorize("hasAuthority('SCOPE_create:contatos')")
 	public ResponseEntity<Contato> cadastrarContato(@Valid @RequestBody Contato contato) {
 		if (contato.getEnderecos() != null) {
@@ -49,7 +50,8 @@ public class ContatoController {
 	}
 
 	// Endpoint protegido: exige o scope "update:contatos"
-	@PutMapping("Alterar Contato Existente")
+	@PutMapping()
+	@Operation(summary = "Alterar contato existente")
 	@PreAuthorize("hasAuthority('SCOPE_update:contatos')")
 	public ResponseEntity<Contato> alterarContato(@PathVariable UUID id, @RequestBody Contato contato) {
 		if (!contatoRepository.existsById(id)) {
@@ -61,7 +63,8 @@ public class ContatoController {
 	}
 
 	// Endpoint protegido: exige o scope "delete:contatos"
-	@DeleteMapping("Excluir Contato")
+	@DeleteMapping()
+	@Operation(summary = "Excluir contato existente")
 	@PreAuthorize("hasAuthority('SCOPE_delete:contatos')")
 	public ResponseEntity<Void> excluirContato(@PathVariable UUID id) {
 		if (!contatoRepository.existsById(id)) {
@@ -72,10 +75,11 @@ public class ContatoController {
 	}
 
 	// Endpoint protegido: exige o scope "update:contatos"
-	@PatchMapping("Atualizar Parcialmente um Contato")
+	@PatchMapping()
 	@Transactional
 	@PreAuthorize("hasAuthority('SCOPE_update:contatos')")
 	@Operation(
+			summary = "Atualiza Parcialmente um Contato",
 			description = "Atualiza apenas os campos fornecidos. Campos não fornecidos permanecem inalterados."
 	)
 	@ApiResponses({

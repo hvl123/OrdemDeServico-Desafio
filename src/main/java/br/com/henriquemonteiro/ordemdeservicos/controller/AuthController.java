@@ -1,6 +1,7 @@
 package br.com.henriquemonteiro.ordemdeservicos.controller;
 
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -27,6 +28,7 @@ public class AuthController {
     private String audience;
 
     @PostMapping("/token")
+    @Operation(summary = "Gera o token de acesso JWT")
     public ResponseEntity<?> getToken() {
         String tokenUrl = issuer + "oauth/token";
         RestTemplate restTemplate = new RestTemplate();
