@@ -30,7 +30,8 @@ public class ContatoController {
 	private ContatoRepository contatoRepository;
 
 	// Endpoint público (sem validação de scopes)
-	@GetMapping("Listar Todos Os Contatos")
+	@GetMapping()
+	@Operation(summary = "Listar todos os contatos")
 	public List<Contato> listarContatos() {
 		return contatoRepository.findAll();
 	}
