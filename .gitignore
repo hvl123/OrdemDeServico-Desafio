@@ -18,14 +18,13 @@ HELP.md
 *.iws
 *.iml
 *.ipr
-
+resources/*.properties
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
-
 
 ### VS Code ###
 .vscode/
