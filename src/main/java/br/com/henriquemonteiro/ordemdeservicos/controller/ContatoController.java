@@ -30,7 +30,7 @@ public class ContatoController {
 	private ContatoRepository contatoRepository;
 
 	// Endpoint público (sem validação de scopes)
-	@GetMapping()
+	@GetMapping("/ListarContatos")
 	@Operation(summary = "Listar todos os contatos")
 	public List<Contato> listarContatos() {
 		return contatoRepository.findAll();
@@ -38,7 +38,7 @@ public class ContatoController {
 
 	// Endpoint protegido: exige o scope "create:contatos"
 
-	@PostMapping()
+	@PostMapping("/CadastrarContato")
 	@Operation(summary = "Cadastrar novo contato")
 	@PreAuthorize("hasAuthority('SCOPE_create:contatos')")
 	public ResponseEntity<Contato> cadastrarContato(@Valid @RequestBody Contato contato) {
@@ -50,20 +50,36 @@ public class ContatoController {
 	}
 
 	// Endpoint protegido: exige o scope "update:contatos"
-	@PutMapping()
+	@PutMapping("/AlterarContato/{id}")
 	@Operation(summary = "Alterar contato existente")
 	@PreAuthorize("hasAuthority('SCOPE_update:contatos')")
-	public ResponseEntity<Contato> alterarContato(@PathVariable UUID id, @RequestBody Contato contato) {
-		if (!contatoRepository.existsById(id)) {
+	public ResponseEntity<Contato> alterarContato(@PathVariable UUID id,@Valid @RequestBody Contato contatoAtualizado) {
+		Optional<Contato> contatoOptional = contatoRepository.findById(id);
+		if (contatoOptional.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		contato.setId(id);
-		Contato atualizado = contatoRepository.save(contato);
+
+		Contato contatoExistente = contatoOptional.get();
+		contatoExistente.setNome(contatoAtualizado.getNome());
+		contatoExistente.setEmail(contatoAtualizado.getEmail());
+		contatoExistente.setTelefone(contatoAtualizado.getTelefone());
+		contatoExistente.setDataNascimento(contatoAtualizado.getDataNascimento());
+
+		// Atualizar endereços
+		if (contatoAtualizado.getEnderecos() != null) {
+			contatoExistente.getEnderecos().clear(); // Remove os antigos
+			for (Endereco endereco : contatoAtualizado.getEnderecos()) {
+				endereco.setContato(contatoExistente); // Define o relacionamento
+				contatoExistente.getEnderecos().add(endereco);
+			}
+		}
+
+		Contato atualizado = contatoRepository.save(contatoExistente);
 		return new ResponseEntity<>(atualizado, HttpStatus.OK);
 	}
 
 	// Endpoint protegido: exige o scope "delete:contatos"
-	@DeleteMapping()
+	@DeleteMapping("/DeletarContato/{id}")
 	@Operation(summary = "Excluir contato existente")
 	@PreAuthorize("hasAuthority('SCOPE_delete:contatos')")
 	public ResponseEntity<Void> excluirContato(@PathVariable UUID id) {
@@ -75,7 +91,7 @@ public class ContatoController {
 	}
 
 	// Endpoint protegido: exige o scope "update:contatos"
-	@PatchMapping()
+	@PatchMapping("/AlterarParcialmente/{id}")
 	@Transactional
 	@PreAuthorize("hasAuthority('SCOPE_update:contatos')")
 	@Operation(

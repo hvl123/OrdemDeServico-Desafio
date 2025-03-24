@@ -37,9 +37,9 @@ public class SecurityConfigTest {
 
     // 2. Acesso ao endpoint de contatos COM autenticação e permissão correta
     @Test
-    @WithMockUser(authorities = "SCOPE_read:contatos") // Simula usuário com permissão correta
+    @WithMockUser(username = "user", roles = "USER", authorities = "SCOPE_read:contatos")
     void quandoAcessarContatosComPermissao_DevePermitirAcesso() throws Exception {
-        mockMvc.perform(get("/api/contatos"))
+        mockMvc.perform(get("/api/contatos/ListarContatos")) // Verifique o endpoint correto no seu Controller
                 .andExpect(status().isOk());
     }
 
@@ -47,15 +47,15 @@ public class SecurityConfigTest {
     @Test
     @WithAnonymousUser
     void quandoAcessarContatosSemAutenticacao_DeveNegarAcesso() throws Exception {
-        mockMvc.perform(get("/api/contatos"))
+        mockMvc.perform(get("/api/contatos")) // Verifique o endpoint correto no seu Controller
                 .andExpect(status().isUnauthorized());
     }
 
     // 4. Acesso ao endpoint de contatos COM autenticação mas SEM permissão correta
     @Test
-    @WithMockUser(authorities = "SCOPE_wrong_scope") // Simula usuário com permissão errada
+    @WithMockUser(username = "user", roles = "USER", authorities = "SCOPE_wrong_scope")
     void quandoAcessarContatosSemPermissaoAdequada_DeveNegarAcesso() throws Exception {
-        mockMvc.perform(get("/api/contatos"))
+        mockMvc.perform(get("/api/contatos")) // Verifique o endpoint correto no seu Controller
                 .andExpect(status().isForbidden());
     }
 }

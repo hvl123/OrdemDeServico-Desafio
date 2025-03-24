@@ -1,5 +1,5 @@
 package br.com.henriquemonteiro.ordemdeservicos.config;
-
+import org.springframework.http.HttpMethod;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +12,11 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -23,34 +28,46 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .cors().and() // 👈 Habilita CORS no Spring Security
                 .authorizeHttpRequests(auth -> auth
-                        // Libera acesso irrestrito ao Swagger
                         .requestMatchers(
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/api/token",
-                                "/webjars/**", // Adicione esta linha
-                                "/swagger-resources/**" // Adicione esta linha
+                                "/webjars/**",
+                                "/swagger-resources/**",
+								"/static/**",
+								"/contato.html",
+								"/index.html",
+                                "/favicon.ico"
                         ).permitAll()
-
-
-                        // Protege o endpoint de contatos: apenas autenticados e com SCOPE_read:contatos podem acessar
-                        .requestMatchers("/api/contatos").hasAuthority("SCOPE_read:contatos")
-
-                        // Exige autenticação para todas as outras requisições
+						// ⚠️ Libera apenas requisições OPTIONS (preflight) da API para o CORS funcionar
+						.requestMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
+						// ✅ Requisições reais exigem escopo correto
+						.requestMatchers("/api/contatos").hasAuthority("SCOPE_read:contatos")
                         .anyRequest().authenticated()
                 )
-                // Habilita autenticação via JWT
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())))
-
-                // Configura a sessão como STATELESS (sem estado)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-
-                // Desativa CSRF para APIs REST
                 .csrf(AbstractHttpConfigurer::disable);
 
         return http.build();
+    }
+
+    // Configuração de CORS
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+		
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(List.of("http://3.15.30.62:8080")); // ou "*" em dev
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowCredentials(true); // se usar cookies ou headers como Authorization
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 
     @Bean
