@@ -28,23 +28,29 @@ git clone https://github.com/hvl123/OrdemDeServico-Desafio/tree/main
 
 ### 2. Configure o projeto
 
-utilize o comando: maven clean install 
+utilize o comando: mvn clean install -DskipTests
+(o comando -DskipTest fara o maven compilar pulando os testes unitarios para compilar pela primeira vez e baixar as dependências do projeto)
 o maven baixará as dependências necessárias 
 
 ### 3. Crie e configure o banco na aplicação
 (sugestão de banco Postgres)
 -- Execute no PostgreSQL
-CREATE DATABASE ordemdeservico;
+CREATE DATABASE Nome_do_seu_banco;
 CREATE USER api_user WITH PASSWORD 'senha_segura';
-GRANT ALL PRIVILEGES ON DATABASE ordemdeservico TO api_user;
+GRANT ALL PRIVILEGES ON DATABASE Nome_do_seu_banco TO api_user;
 
 ### 4. Crie uma conta no auth0
-O projeto utiliza autenticação então é necessário criar uma conta e configurar
-o acesso.
-crie uma api que tenha acesso as seguintes scopes:
-read:contatos, delete:contatos, uptade:contatos e create:contatos;
-Lembrando que os endpoints do programa só funcionam com um token com essas permissões
+Crie uma conta no Auth0 e configure uma API com os seguintes scopes:
 
+read:contatos
+
+create:contatos
+
+update:contatos
+
+delete:contatos
+
+A aplicação só permitirá acesso aos endpoints se um token com essas permissões for utilizado.
 ## 5. Configure o properties
  --- Exemplo de config ----
 
@@ -59,16 +65,42 @@ auth0.issuer=seu_auth0_issuer (**Lembrar de no final da url colocar "/" para fun
 auth0.clientId=seu_clientID
 auth0.clientSecret=seu_client_secret
 
-## 6. Teste a aplicação
+## 6. Executando a aplicação
+agora compile o arquivo com os testes unitários 
 
-Acesse o Swagger UI após iniciar a aplicação:
+mvn clean install
+
+Após tudo configurado, inicie a API com:
+
+mvn spring-boot:run
+
+## 7. Testando a Api com SWAGGER
+Após a aplicação iniciar, acesse o Swagger UI:
 🔗 http://localhost:8080/swagger-ui.html
 
-gere o token no endpoint post/token
+Gere um token no endpoint POST /token.
 
-faça o login com o token gerado na parte superior da página
+Copie o token gerado.
 
-## 7. Dificuldades ou dúvidas
+No Swagger, clique em Authorize e cole o token para autenticar.
 
-entre em contato com:
-henriquehvl1@gmail.com
+Agora você pode testar os endpoints da API.
+
+## 8. Utilizando o arquivo index.html para o front
+Caso queira utilizar o front-end da aplicação é necessário configurar a url do projeto para o localhost
+
+navegue até a pasta do projeto: 
+src/main/java/resources/static e abra o arquivo index.html com um editor de código
+
+altere os seguintes trechos de código
+exemplo:
+const apiUrl = 'http://localhost:8080/api/contatos';
+const response = await fetch('http://localhost:8080/api/token'
+
+## 9. Acessando o Front
+Com a api em execução acesse a url:
+'http://localhost:8080/index.html'
+
+## 10 ❓ Dúvidas ou dificuldades
+Entre em contato:
+📩 henriquehvl1@gmail.com
